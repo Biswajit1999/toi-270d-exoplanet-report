@@ -28,6 +28,18 @@ not make it free of residual stellar or instrumental systematics.
 The saved row is the input actually used by `scripts/analyze_transit.py`; the
 analysis does not query a changing live service at run time.
 
+## Companion-planet ephemerides for the BLS mask
+
+- File: `companion_ephemerides.csv`
+- Service: NASA Exoplanet Archive TAP, `pscomppars` table
+- Exact query: <https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name%2Cpl_orbper%2Cpl_tranmid%2Cpl_trandur+from+pscomppars+where+hostname%3D%27TOI-270%27&format=csv>
+- Retrieved: 2026-08-15
+
+The saved TOI-270 b and c period, transit-midpoint, and duration values define
+the companion masks in `scripts/analyze_bls_crosscheck.py`. Masking prevents
+the strong two-times-TOI-270-c harmonic near 11.32 days from being mistaken for
+TOI-270 d. The BLS script never queries the live service at run time.
+
 
 ## Additional TESS sectors for robustness analysis
 

@@ -1,0 +1,12 @@
+quantity,value,unit
+sectors,3,count
+cadences,42991,count
+cadences_before_companion_mask,44553,count
+companion_masked_cadences,1562,count
+archive_period_days,11.38194,days
+recovered_period_days,11.3782408695,days
+period_offset_percent,-0.0325,percent
+box_duration_hours,1.6936,hours
+box_depth_ppm,3002.34277876,ppm
+box_depth_error_ppm,77.1376352862,ppm
+box_depth_snr,38.9218928947,sigma-equivalent depth/error

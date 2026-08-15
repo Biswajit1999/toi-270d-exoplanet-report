@@ -30,6 +30,7 @@ The outer transiting world in a compact M-dwarf system, examined here through it
 pip install -r requirements.txt
 python scripts/analyze_transit.py
 python scripts/analyze_multisector.py
+python scripts/analyze_bls_crosscheck.py
 pytest tests/ -v
 ```
 
@@ -41,7 +42,7 @@ The script keeps finite `QUALITY == 0` cadences, normalizes `PDCSAP_FLUX`, and a
 |---|---:|
 | TESS sector | 3 |
 | Cadences in fitted window | 756 |
-| Transit support | ΔBIC ≥ 10 |
+| Transit support | **Supported — ΔBIC = 301.7 (lower-margin within this portfolio)** |
 | Midpoint correction | +0.343 h ± 1.73 min |
 | Model mid-transit depth | 2676.0 ± 181.6 ppm |
 | Radius ratio Rp/Rs | 0.04728 |
@@ -66,6 +67,27 @@ The archive prediction was timing-adjusted independently in 3 fitted sector(s) (
 The per-sector table is in [`figures/multisector_statistics.csv`](figures/multisector_statistics.csv). Regenerate all three figures with `python scripts/analyze_multisector.py`.
 <!-- MULTISECTOR-UPGRADE-END -->
 
+<!-- BLS-CROSSCHECK-START -->
+## Model-independent period and depth cross-check
+
+The limb-darkened fit is checked with Astropy's `BoxLeastSquares`, which uses a box-shaped signal rather than the `batman` transit profile. Before the search, cadences around the saved NASA Exoplanet Archive transit windows of TOI-270 b and c are masked; without this step, twice planet c's 5.66-day period produces a strong alias near 11.32 days. The disclosed search is limited to ±5% around planet d's archived period, so this is a consistency test, not a blind discovery search.
+
+| Quantity | BLS result |
+|---|---:|
+| Sectors / retained cadences | 3 / 42,991 |
+| Companion-window cadences masked | 1,562 |
+| Archive period | 11.38194 d |
+| BLS maximum | 11.37824 d (−0.0325%) |
+| Box depth | 3002.3 ± 77.1 ppm |
+| Box depth S/N | 38.9 |
+
+The companion-masked box depth agrees within 1.1σ with the independent-sector limb-darkened combination (3164.7 ± 135.2 ppm). The BLS period is only 0.0325% below the archive value and is not used to revise the authoritative ephemeris.
+
+<p align="center"><img src="figures/toi270d_bls_crosscheck.png" alt="Companion-masked Box Least Squares period cross-check for TOI-270 d" width="760"></p>
+
+Machine-readable results are in [`figures/bls_crosscheck.csv`](figures/bls_crosscheck.csv), and the saved companion inputs are in [`data/companion_ephemerides.csv`](data/companion_ephemerides.csv). Regenerate them with `python scripts/analyze_bls_crosscheck.py`.
+<!-- BLS-CROSSCHECK-END -->
+
 ## System context
 
 - Radius: 2.00 Earth radii
@@ -80,6 +102,7 @@ The per-sector table is in [`figures/multisector_statistics.csv`](figures/multis
 ## Limitations
 
 - The orbit is assumed circular and the quadratic limb-darkening coefficients are fixed representative values; they are not atmosphere-grid interpolations.
+- This is a lower-margin supported result within this portfolio. Its support is more sensitive than the very large-ΔBIC cases to fixed analysis choices such as the outlier rule, fitting window, and limb-darkening coefficients.
 - The scaled semi-major axis is derived from the saved composite semi-major axis and stellar radius; their uncertainties are not propagated.
 - Midpoint freedom corrects accumulated ephemeris error but introduces a bounded timing search. ΔBIC, not a naïve one-parameter p-value, is used as the support gate.
 - PDCSAP processing, dilution, stellar variability, transit-timing variations, and long-timescale covariance can still bias the inferred geometry.
@@ -93,6 +116,7 @@ index.html
 requirements.txt
 data/                       unmodified TESS FITS + NASA row + SOURCE.md
 scripts/analyze_transit.py  timing-adjusted limb-darkened transit fit
+scripts/analyze_bls_crosscheck.py  model-independent three-sector box search
 figures/                    generated plot + summary_statistics.csv
 tests/                      real-data regression tests
 .github/workflows/tests.yml CI on every push and pull request
@@ -103,7 +127,7 @@ LICENSE                     MIT
 
 1. [Günther et al. 2019](https://ui.adsabs.harvard.edu/abs/2019NatAs...3.1099G/abstract) — discovery reference as listed by the NASA Exoplanet Archive.
 2. Ricker, G. R. et al. (2015), *Transiting Exoplanet Survey Satellite (TESS)*, JATIS 1, 014003, [doi:10.1117/1.JATIS.1.1.014003](https://doi.org/10.1117/1.JATIS.1.1.014003).
-3. TESS Team, *TESS Light Curves — All Sectors*, MAST, [doi:10.17909/t9-nmc8-f686](https://doi.org/10.17909/t9-nmc8-f686); Sector 3 used here.
+3. TESS Team, *TESS Light Curves — All Sectors*, MAST, [doi:10.17909/t9-nmc8-f686](https://doi.org/10.17909/t9-nmc8-f686); Sectors 3–5 used here.
 4. [NASA Exoplanet Archive](https://exoplanetarchive.ipac.caltech.edu/), `pscomppars` TAP row retrieved 2026-08-15.
 
 ## Author
