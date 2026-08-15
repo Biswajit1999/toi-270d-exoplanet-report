@@ -1,10 +1,20 @@
-# TOI-270 d — Real TESS Transit Report
+# TOI-270 d: A Temperate Sub-Neptune in a Compact System
 
+<!-- TARGET-IDENTITY-START -->
+<p align="center">
+  <img src="assets/artist_concept.webp" alt="Artist's interpretation of TOI-270 d near its host star" width="900">
+</p>
+
+<p align="center"><em>AI-generated artist's interpretation informed by the measured system properties; not a direct image.</em></p>
+
+**Temperate sub-Neptune · compact system · TESS**
+
+The outer transiting world in a compact M-dwarf system, examined here through its TESS timing, transit support, and the limits of what broadband photometry can say about atmosphere.
+<!-- TARGET-IDENTITY-END -->
 <p align="center">
   <img src="figures/toi270d_tess_transit.png" alt="Phase-folded real TESS transit light curve of TOI-270 d" width="760">
 </p>
 
-One real public TESS SPOC light curve; one historical NASA Exoplanet Archive ephemeris; one timing-adjusted, limb-darkened transit fit.
 
 **[Open the full report](https://biswajit1999.github.io/toi-270d-exoplanet-report/)** — the live GitHub Pages version.
 
